@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+/*!
+ * google-results-checker
+ * Copyright(c) 2016 martinerko <martinerko@gmail.com>
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
+
+var program = require('commander');
+var crawler = require('../lib/crawler');
+var reporter = require('../lib/reporter');
+var config = require('../lib/config');
+
+program
+  .version('0.0.1')
+  .option('-k, --keywords [text]', 'Keywords to search for', config.KEYWORDS)
+  .option('-s, --site [text]', 'Site url', config.SITE)
+  .option('-f, --full', 'Display additional info about search results');
+
+program.on('--help', function () {
+  console.log('  Usage:');
+  console.log('');
+  console.log('    $ google-results-checker --help                      > displays help');
+  console.log('    $ google-results-checker                             > searches for "' + config.KEYWORDS + '" in combination with "' + config.SITE + '". These are default values.');
+  console.log('    $ google-results-checker -k "title search"           > searches for "title search" in combination with default "' + config.SITE + '"');
+  console.log('    $ google-results-checker -s "www.info.com.au"        > searches for default "online title search" in combination with "www.info.com.au"');
+  console.log('    $ google-results-checker -k "react" -s "github.com"  > searches for "react" in combination with "github.com"');
+  console.log('    $ google-results-checker -f                          > display full info about search results (not used by default)');
+  console.log('');
+});
+
+program.parse(process.argv);
+
+if (program.full) {
+  console.log('searching for "%s" linked to %s', program.keywords, program.site);
+  console.log('');
+}
+
+crawler(program.keywords, program.site)
+  .then(function (results) {
+    reporter(results, program.full);
+  })
+  .catch(function (err) {
+    console.log('ERROR: %s', err.message);
+  });

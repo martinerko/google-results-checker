@@ -1,0 +1,34 @@
+{
+  "name": "google-results-checker",
+  "version": "0.1.0",
+  "description": "Simple CLI tool that provides basic information about the search results positions of given keywords related to particular website",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "google-results-checker": "./.bin/google-results-checker"
+  },
+  "keywords": [
+    "google",
+    "ranking",
+    "positions"
+  ],
+  "author": "martinerko",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.1",
+    "commander": "^2.9.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.1.0"
+  }
+}
